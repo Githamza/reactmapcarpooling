@@ -1,0 +1,110 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/forms";
+
+@theme {
+  --color-primary: #3b82f6;
+  --color-primary-dark: #2563eb;
+  --color-secondary: #ff3388;
+  --color-secondary-dark: #e11d74;
+  --font-sans: "Roboto", sans-serif;
+  --shadow-custom: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Map container styles */
+.leaflet-container {
+  width: 100%;
+  height: 100vh;
+  z-index: 10; /* Ensure map has a lower z-index */
+}
+
+/* Animation for loading state */
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.loading {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+/* Custom component styles */
+@layer components {
+  .stat-item {
+    @apply bg-gray-100 p-3 rounded-md transition-all duration-200 ease-in-out;
+  }
+
+  .stat-item:hover {
+    @apply bg-gray-200 -translate-y-0.5;
+  }
+
+  .control-button {
+    @apply bg-white border-none rounded p-2 shadow-md text-sm font-medium text-gray-700 cursor-pointer transition-all duration-200 ease-in-out;
+  }
+
+  .control-button:hover {
+    @apply bg-gray-50 shadow-lg -translate-y-0.5;
+  }
+
+  .control-button:active {
+    @apply translate-y-0 shadow-sm;
+  }
+
+  .info-panel {
+    @apply absolute top-16 right-2 left-2 bottom-4 z-50 flex flex-col
+           sm:left-auto sm:right-4 sm:w-[22rem]
+           bg-white/95 backdrop-blur-sm p-4 sm:p-5 rounded-xl shadow-xl
+           border border-gray-200/70
+           transition-all duration-300 ease-in-out;
+  }
+
+  .info-panel:hover {
+    @apply shadow-2xl;
+  }
+
+  /* Floating button shown when the panel is collapsed */
+  .info-panel-toggle {
+    @apply absolute top-16 right-4 z-50 flex items-center gap-2
+           bg-white/95 backdrop-blur-sm px-4 py-2 rounded-full shadow-lg
+           border border-gray-200 text-sm font-semibold text-gray-700
+           hover:shadow-xl hover:bg-white transition-all duration-200;
+  }
+
+  /* Content scrolls inside the panel so it never overflows the viewport */
+  .info-panel__body {
+    @apply flex-1 min-h-0 overflow-y-auto -mr-2 pr-2;
+  }
+
+  /* On short/laptop viewports let the panel hug its content instead of
+     stretching the full height */
+  @media (min-height: 900px) {
+    .info-panel {
+      @apply bottom-auto max-h-[calc(100vh-5rem)];
+    }
+  }
+
+  .legend-item {
+    @apply flex items-center mb-1;
+  }
+
+  .legend-color {
+    @apply w-3 h-3 rounded-full mr-2;
+  }
+
+  .map-legend {
+    @apply bg-white p-2 rounded shadow-sm text-xs leading-normal;
+  }
+}
